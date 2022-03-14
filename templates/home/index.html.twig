@@ -7,7 +7,6 @@
     
     
     {% for post in posts %}
- feature/Bootsrap
     
     <div class="card bg-secondary mb-3" style="max-width: 20rem;">
   <div class="card-header">   <h2>{{ post.title }}</h2></div>
@@ -15,6 +14,7 @@
     <h4 class="card-title"> <div>{{ post.content }}</div></h4>
     <p class="card-text"><div>{{ post.status }}</div></p>
      <div>{{ post.createdAt|date("d/m/Y") }}</div>
+     <a class="btn btn-danger" href"{{ path('app_register')}}">Voir plus</a>
   </div>
 </div>
     
@@ -25,7 +25,6 @@
        
        {{form_end(form)}}
     </div>
-feature/post_v2
 {% endblock %}
       
        
