@@ -5,27 +5,43 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Controller\RegistrationController;
+use Faker;
 
 class FacticesFixtures extends Fixture
 {
+    private $userPasswordHasher;
+
+    public function __construct(UserPasswordHasherInterface $userPasswordHasher) {
+        $this->userPasswordHasher = $userPasswordHasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        for ($i = 0; $i<4; $i++) {
+        $faker = Faker\Factory::create('fr_FR');
+
+        
+        for ($i = 0; $i<5; $i++) {
             // $product = new Product();
             $user = new User;
-            $user->setEmail('stef@gmeila.com' . $i);
-            $user->setFirstname('firstname-' . $i);
-            $user->setLastname('lastname-' . $i);
-            $user->setUsername('username-'. $i);
+            $user->setEmail($faker->email);
+            $user->setFirstname($faker->firstname);
+            $user->setLastname($faker->lastname);
+            $user->setUsername($faker->username);
             $user->setRoles(['ROLE_USER']);
-            $user->setPassword('password-'. $i);
-            $user->setIsVerified('is_verified-'. $i);
+            $user->setPassword(
+                $this->userPasswordHasher->hashPassword(
+                    $user,
+                    'test'
+                )
+            );
+            $user->setIsVerified($faker->boolean);
             // $manager->persist($product);
             $manager->persist($user);
         }
         $manager->flush();
     }
 }
- 
-        
-         
