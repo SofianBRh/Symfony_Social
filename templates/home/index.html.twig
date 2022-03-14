@@ -7,6 +7,7 @@
     
     
     {% for post in posts %}
+ feature/Bootsrap
     
     <div class="card bg-secondary mb-3" style="max-width: 20rem;">
   <div class="card-header">   <h2>{{ post.title }}</h2></div>
@@ -18,6 +19,13 @@
 </div>
     
    {% endfor %}
+        </div>
+       
+       {{form_start(form)}}
+       
+       {{form_end(form)}}
+    </div>
+feature/post_v2
 {% endblock %}
       
        
