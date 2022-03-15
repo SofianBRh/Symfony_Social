@@ -1,11 +1,10 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}{% endblock %}
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    <h1>Liste des postes</h1>
-    
-    
+    <h1>Liste des questions</h1>
+  
     {% for post in posts %}
     
     <div class="card bg-secondary mb-3" style="max-width: 20rem;">
@@ -21,13 +20,14 @@
 </div>
     
    {% endfor %}
-        </div>
-       {{form_start(form)}} 
-       {{form_widget(form)}}
-       <button type="submit">Submit</button>
-       {{form_end(form)}}
-        
-    </div>
+   {% if is_granted('ROLE_USER') %}
+      </div>
+          {{form_start(form)}} 
+          {{form_widget(form)}}
+          <button type="submit">Submit</button>
+          {{form_end(form)}}
+      </div>
+    {% endif %}
 {% endblock %}
       
        
