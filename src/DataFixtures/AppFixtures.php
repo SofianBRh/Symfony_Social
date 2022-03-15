@@ -11,6 +11,7 @@ class AppFixtures extends Fixture
     {
 
 
+
         $faker = Faker\Factory::create('fr_FR');
         // on crée 4 auteurs avec noms et prénoms "aléatoires" en français
         $user = Array();
@@ -28,9 +29,8 @@ class AppFixtures extends Fixture
 
             $manager->persist($user[$i]);
         }
-    // nouvelle boucle pour créer des livres
 
-    
+        $manager->flush();
 
     }
 }
