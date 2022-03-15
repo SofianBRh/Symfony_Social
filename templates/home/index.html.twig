@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
-
+ {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">{% endblock %}
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
@@ -14,7 +15,7 @@
     <h4 class="card-title"> <div>{{ post.content }}</div></h4>
     <p class="card-text"><div>{{ post.status }}</div></p>
      <div>{{ post.createdAt|date("d/m/Y") }}</div>
-     <a class="btn btn-danger" href"{{ path('app_register')}}">Voir plus</a>
+     <a class="btn btn-primary"href="{{ path("app_detail",{'id':post.id}) }}">Voir plus</a>
   </div>
 </div>
     
