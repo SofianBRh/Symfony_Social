@@ -15,12 +15,18 @@
     <h4 class="card-title"> <div>{{ post.content }}</div></h4>
     <p class="card-text"><div>{{ post.status }}</div></p>
      <div>{{ post.createdAt|date("d/m/Y") }}</div>
-
      <a class="btn btn-primary"href="{{ path("app_detail",{'id':post.id}) }}">Voir plus</a>
   </div>
 </div>
     
    {% endfor %}
+        </div>
+       {{form_start(form)}} 
+       {{form_widget(form)}}
+       <button type="submit">Submit</button>
+       {{form_end(form)}}
+        
+    </div>
 {% endblock %}
       
        
