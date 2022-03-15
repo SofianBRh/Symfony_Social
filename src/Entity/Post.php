@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
+    const STATUS_PUBLISHED = 'published';
+    const STATUS_UNPUBLISHED = 'unpublished';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -32,10 +35,13 @@ class Post
     private $user;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OrderBy(["createdAt" => "DESC"])]
     private $comments;
 
     public function __construct()
     {
+        $this->status = POST::STATUS_PUBLISHED;
+        $this->createdAt = new \DateTimeImmutable('now');
         $this->comments = new ArrayCollection();
     }
 
