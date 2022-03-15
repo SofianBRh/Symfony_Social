@@ -16,7 +16,6 @@ class PostFormType extends AbstractType
             ->add('content')
         ;
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
