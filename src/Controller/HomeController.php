@@ -41,14 +41,7 @@ class HomeController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
-    /**
-     * @Route ("/home/{id}/delete", name="app_delete")
-     * @param Post $post
-     * @return RedirectResponse
-     */
-
-    #[Route('/home', name: 'app_delete', methods: ['GET', 'POST'])]
+    #[Route('/{id}/delete', name: 'app_delete', methods: ['GET', 'POST'])]
     public function delete(Post $post, EntityManagerInterface $em):RedirectResponse
     {
         $em->remove($post);
@@ -57,7 +50,7 @@ class HomeController extends AbstractController
         return $this->redirectToRoute(route : "app_home");
     }
 
-    #[Route("/home/{id}/edit", name: 'app_edit', methods: ['GET', 'POST'])]
+    #[Route("/{id}/edit", name: 'app_edit', methods: ['GET', 'POST'])]
     public function edit(Post $post, Request $request, EntityManagerInterface $em) : Response
     {
         $form = $this->createForm(PostFormType::class, $post);
