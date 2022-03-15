@@ -1,32 +1,29 @@
 {% extends 'base.html.twig' %}
- {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">{% endblock %}
+{% block stylesheets %}{% endblock %}
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    <h1>Liste des postes</h1>
-    
-    
+    <h1>Liste des questions</h1>
+  
     {% for post in posts %}
-    
-    <div class="card bg-secondary mb-3" style="max-width: 20rem;">
-  <div class="card-header">   <h2>{{ post.title }}</h2></div>
-  <div class="card-body">
-    <h4 class="card-title"> <div>{{ post.content }}</div></h4>
-    <p class="card-text"><div>{{ post.status }}</div></p>
-     <div>{{ post.createdAt|date("d/m/Y") }}</div>
-     <a class="btn btn-primary"href="{{ path("app_detail",{'id':post.id}) }}">Voir plus</a>
-  </div>
-</div>
-    
-   {% endfor %}
+      <div class="card bg-secondary mb-3" style="max-width: 20rem;">
+        <div class="card-header">   <h2>{{ post.title }}</h2></div>
+        <div class="card-body">
+          <h4 class="card-title"> <div>{{ post.content }}</div></h4>
+          <p class="card-text"><div>{{ post.status }}</div></p>
+          <div>{{ post.createdAt|date("d/m/Y") }}</div>
+          <a class="btn btn-primary"href="{{ path("app_detail",{'id':post.id}) }}">Voir plus</a>
         </div>
-       {{form_start(form)}} 
-       {{form_widget(form)}}
-       <button type="submit">Submit</button>
-       {{form_end(form)}}
-        
-    </div>
+      </div>
+   {% endfor %}
+   {% if is_granted('ROLE_USER') %}
+      </div>
+          {{form_start(form)}} 
+          {{form_widget(form)}}
+          <button type="submit">Submit</button>
+          {{form_end(form)}}
+      </div>
+    {% endif %}
 {% endblock %}
       
        
