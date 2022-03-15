@@ -25,29 +25,24 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(PostRepository $post_repo): Response
+    public function index(PostRepository $post_repo, Request $request, EntityManagerInterface $em): Response
     {
         # Souscription de l'utilisateur
         /** @var User $user */
         $user = $this->getUser();
         
-        $postez = new post();
+        $post = new post();
 
-        $form = $this->createForm(PostFormType::class, $postez);
+        $form = $this->createForm(PostFormType::class, $post);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $now = new \DateTimeImmutable;
-       
-            $postez->setUser($user);
-            $postez->setStatus("en cours");
-            $postez->setCreatedAt ($now);
-            $em->persist($postez);
-
+            $post->setUser($user);
+            $em->persist($post);
             $em->flush();
         }
 
-        $posts =$post_repo->findBy([],['createdAt' => 'desc']);
+        $posts =$post_repo->findBy(['status' => 'published'],['createdAt' => 'desc']);
         return $this->render('home/index.html.twig', [
             'posts' => $posts,
             'form' => $form->createView()
