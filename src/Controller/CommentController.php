@@ -16,6 +16,8 @@ class CommentController extends AbstractController
     #[Route('/{id}/edit', name: 'app_comment_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
+        $this->denyAccessUnlessGranted('COMMENT_EDIT', $comment);
+
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -33,6 +35,8 @@ class CommentController extends AbstractController
     #[Route('/{id}', name: 'app_comment_delete', methods: ['POST'])]
     public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
+        $this->denyAccessUnlessGranted('COMMENT_EDIT', $comment);
+        
         $post_id = $comment->getPost()->getId();
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $commentRepository->remove($comment);
