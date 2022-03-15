@@ -10,7 +10,7 @@ use App\Repository\PostRepository;
 
 class HomeController extends AbstractController
 {
-    #[Route('/home', name: 'app_home')]
+    #[Route('/', name: 'app_home')]
     public function index(PostRepository $post_repo): Response
     {
         $posts =$post_repo->findBy([],['createdAt' => 'desc']);
