@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use Faker;
 use App\Entity\Post;
 use App\Entity\User;
+use App\Entity\Comment;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -22,7 +23,9 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         // create users
+        $users = [];
         foreach($this->generateUser() as $user) {
+            $users[] = $user;
             $manager->persist($user);
             // create post for users
             if(!$user->isVerified()) {
@@ -30,9 +33,24 @@ class AppFixtures extends Fixture
             }
             foreach($this->generatePost($user) as $post) {
                 $manager->persist($post);
+                // add comment to post
+                foreach($this->generateComment($post, $this->faker->randomElement($users)) as $comment) {
+                    $manager->persist($comment);
+                }
             }
         }
         $manager->flush();
+    }
+
+    private function generateComment(Post $post, User $user): \Generator
+    {
+        for($i = 0; $i < mt_rand(0, 10); $i++) {
+            $comment = new Comment();
+            $comment->setContent(implode(' ', $this->faker->words(50)));
+            $comment->setPost($post);
+            $comment->setUser($user);
+            yield $comment;
+        }
     }
 
     private function generatePost(User $user): \Generator
