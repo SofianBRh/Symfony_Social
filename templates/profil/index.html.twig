@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfilController!{% endblock %}
+
+{% block body %}
+
+ <div class="card bg-secondary mb-3" style="max-width: 20rem;">
+  <div class="card-header">   <h2>{{ app.user.username }}</h2></div>
+  <div class="card-body">
+    <h4 class="card-title"> <div>{{ app.user.firstname }}</div></h4>
+    <p class="card-text"><div>{{ app.user.lastname }}</div></p>
+     <div>{{ app.user.email }}</div>
+  </div>
+</div>
+
+{% endblock %}
