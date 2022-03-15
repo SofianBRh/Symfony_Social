@@ -1,39 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}StackOverflow{% endblock %}
-{% block stylesheets %}{% endblock %}
 
 {% block body %}
-  <h1 style="text-align:center;">Liste des postes</h1>
-
-  {% for post in posts %}
-
-  <div class="card bg-secondary mb-3" style="margin-left: auto;margin-right: auto;border-radius:3%;margin:3% ;display:inline-block;text-align:center;">
-    <div class="card-header">
-      <h2>{{ post.title }}</h2>
-    </div>
-    <div class="card-body">
-      <h4 class="card-title">
-        <div>{{ post.content }}</div>
-      </h4>
-      <div>le {{ post.createdAt|date("d/m/Y") }} par {{ post.user.username }}</div>
-      <div class="card-footer">
-        <a class="btn btn-danger" href="{{ path('app_post_show', {"id": post.id})}}">Voir plus</a>
-        <a class="btn btn-danger" href="{{ path('app_delete', {"id": post.id})}}">Supprimer</a>
-        <a class="btn btn-danger" href="{{ path('app_edit', {"id": post.id})}}">Modifier</a>
+  <div class="jumbotron shadow">
+    <h1 class="display-3 text-center">Bienvenue sur <span class="text-warning">StackOverflow</span></h1>
+    <hr class="my-4">
+    {% if is_granted('ROLE_USER') %}
+      <p class="lead">
+        Posez votre questions aux développeurs de la communauté StackOverflow :
+      </p>
+      <div>
+          {{form_start(form)}} 
+          {{form_widget(form)}}
+          <div class="text-right">
+            <button type="submit" class="btn btn-primary">Osekour !</button>
+          </div>
+          {{form_end(form)}}
       </div>
-    </div>
+    {% else %}
+      <p class="text-center"><a href="{{ path('app_login') }}">Connectez-vous</a> ou <a href="{{ path('app_register') }}">inscrivez-vous</a> pour poser vos questions aux autres développeurs de la communauté StackOverflow</p>
+      <p class="lead text-center">
+        <a class="btn btn-primary btn-lg" href="{{ path('app_login') }}" role="button">Connexion</a>
+      </p>
+    {% endif %}
   </div>
 
+  <h1 style="text-align:center;">Les dernières questions de la communauté</h1>
+
+  {% for post in posts %}
+    {% include 'partials/_post.html.twig' %}
   {% endfor %}
-  {% if is_granted('ROLE_USER') %}
-    </div>
-        {{form_start(form)}} 
-        {{form_widget(form)}}
-        <button type="submit">Submit</button>
-        {{form_end(form)}}
-    </div>
-  {% endif %}
 {% endblock %}
       
        
