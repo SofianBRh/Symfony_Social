@@ -24,6 +24,7 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class HomeController extends AbstractController
 {
+    #[Route('/', name: 'app_home_1', methods: ['GET', 'POST'])]
     #[Route('/home', name: 'app_home', methods: ['GET', 'POST'])]
     public function index(PostRepository $post_repo, Request $request,EntityManagerInterface $em): Response
     {
