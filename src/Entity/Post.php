@@ -35,6 +35,7 @@ class Post
     private $user;
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OrderBy(["createdAt" => "DESC"])]
     private $comments;
 
     public function __construct()
