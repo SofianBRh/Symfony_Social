@@ -1,33 +1,39 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}StackOverflow{% endblock %}
 {% block stylesheets %}{% endblock %}
-{% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-    <h1>Liste des questions</h1>
-  
-    {% for post in posts %}
-    
-    <div class="card bg-secondary mb-3" style="max-width: 20rem;">
-  <div class="card-header">   <h2>{{ post.title }}</h2></div>
-  <div class="card-body">
-    <h4 class="card-title"> <div>{{ post.content }}</div></h4>
-    <p class="card-text"><div>{{ post.status }}</div></p>
-     <div>{{ post.createdAt|date("d/m/Y") }}</div>
-     <a class="btn btn-danger" href="{{ path('app_post_show', {"id": post.id})}}">Voir plus</a>
-     <a class="btn btn-danger" href="{{ path('app_delete', {"id": post.id})}}">Supprimer</a>
-     <a class="btn btn-danger" href="{{ path('app_edit', {"id": post.id})}}">Modifier</a>
+  <h1 style="text-align:center;">Liste des postes</h1>
+
+  {% for post in posts %}
+
+  <div class="card bg-secondary mb-3" style="margin-left: auto;margin-right: auto;max-width:50%;border-radius:3%;margin:3% ;display:inline-block;text-align:center;">
+    <div class="card-header">
+      <h2>{{ post.title }}</h2>
+    </div>
+    <div class="card-body">
+      <h4 class="card-title">
+        <div>{{ post.content }}</div>
+      </h4>
+      <div>le {{ post.createdAt|date("d/m/Y") }} par {{ post.user.username }}</div>
+      <div class="card-footer">
+        <a class="btn btn-danger" href="{{ path('app_post_show', {"id": post.id})}}">Voir plus</a>
+        <a class="btn btn-danger" href="{{ path('app_delete', {"id": post.id})}}">Supprimer</a>
+        <a class="btn btn-danger" href="{{ path('app_edit', {"id": post.id})}}">Modifier</a>
+      </div>
+    </div>
   </div>
-</div>
-    
-   {% endfor %}
-   {% if is_granted('ROLE_USER') %}
-      </div>
-          {{form_start(form)}} 
-          {{form_widget(form)}}
-          <button type="submit">Submit</button>
-          {{form_end(form)}}
-      </div>
-    {% endif %}
+
+  {% endfor %}
+  {% if is_granted('ROLE_USER') %}
+    </div>
+        {{form_start(form)}} 
+        {{form_widget(form)}}
+        <button type="submit">Submit</button>
+        {{form_end(form)}}
+    </div>
+  {% endif %}
 {% endblock %}
       
        
