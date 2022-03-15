@@ -4,10 +4,10 @@ namespace App\Form;
 
 use App\Entity\Post;
 use Symfony\Component\Form\AbstractType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PostFormType extends AbstractType
 {
@@ -17,8 +17,9 @@ class PostFormType extends AbstractType
             ->add('title', TextType::class, [
                 'label' => 'Titre'
             ])
-            ->add('content', TextareaType::class, [
-                'label' => 'Votre question'
+            ->add('content', CKEditorType::class, [
+                'label' => 'Votre question',
+                'input_sync' => true
             ])
         ;
     }
