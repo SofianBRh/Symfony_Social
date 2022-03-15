@@ -6,15 +6,19 @@
     <h1>Liste des questions</h1>
   
     {% for post in posts %}
-      <div class="card bg-secondary mb-3">
-        <div class="card-header">   <h2>{{ post.title }}</h2></div>
-        <div class="card-body">
-          <h4 class="card-title"> <div>{{ post.content }}</div></h4>
-          <p class="card-text"><div>{{ post.status }}</div></p>
-          <div>{{ post.createdAt|date("d/m/Y") }}</div>
-          <a class="btn btn-primary"href="{{ path("app_post_show",{'id':post.id}) }}">Voir plus</a>
-        </div>
-      </div>
+    
+    <div class="card bg-secondary mb-3" style="max-width: 20rem;">
+  <div class="card-header">   <h2>{{ post.title }}</h2></div>
+  <div class="card-body">
+    <h4 class="card-title"> <div>{{ post.content }}</div></h4>
+    <p class="card-text"><div>{{ post.status }}</div></p>
+     <div>{{ post.createdAt|date("d/m/Y") }}</div>
+     <a class="btn btn-danger" href="{{ path('app_register')}}">Voir plus</a>
+     <a class="btn btn-danger" href="{{ path('app_delete', {"id": post.id})}}">Supprimer</a>
+     <a class="btn btn-danger" href="{{ path('app_edit', {"id": post.id})}}">Modifier</a>
+  </div>
+</div>
+    
    {% endfor %}
    {% if is_granted('ROLE_USER') %}
       </div>
