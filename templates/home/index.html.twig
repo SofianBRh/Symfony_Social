@@ -3,18 +3,32 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/brhaiberh/Brief_Symfony_Social/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/brhaiberh/Brief_Symfony_Social/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
+    <h1>Liste des postes</h1>
+    
+    
+    {% for post in posts %}
+    
+    <div class="card bg-secondary mb-3" style="max-width: 20rem;">
+  <div class="card-header">   <h2>{{ post.title }}</h2></div>
+  <div class="card-body">
+    <h4 class="card-title"> <div>{{ post.content }}</div></h4>
+    <p class="card-text"><div>{{ post.status }}</div></p>
+     <div>{{ post.createdAt|date("d/m/Y") }}</div>
+     <a class="btn btn-danger" href"{{ path('app_register')}}">Voir plus</a>
+  </div>
 </div>
+    
+   {% endfor %}
+        </div>
+       {{form_start(form)}} 
+       {{form_widget(form)}}
+       <button type="submit">Submit</button>
+       {{form_end(form)}}
+        
+    </div>
 {% endblock %}
+      
+       
+       
+        
+    
