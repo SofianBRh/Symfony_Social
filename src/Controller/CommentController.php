@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/comment')]
 class CommentController extends AbstractController
@@ -43,5 +45,44 @@ class CommentController extends AbstractController
         }
 
         return $this->redirectToRoute('app_post_show', ["id" => $post_id], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * Fonction pour les likes
+     *
+     * @param Comment $comment
+     * @param ObjectManager $manager
+     * @param CommentRepository $comment_repo
+     * @return Reponse
+     */
+
+    #[Route('/{id}/like', name: 'app_comment_like', methods: ['POST', 'GET'])]
+    public function like(Comment $comment, EntityManagerInterface $manager, CommentRepository $commentRepository) : Response 
+    {
+        $user = $this->getUser();
+
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message' => 'Unauthorized',
+        ], 403);
+
+        if($comment->getLikes()->contains($user)){
+
+            $comment->removeLike($user);
+            $manager->flush();
+
+            return $this->json([
+                'message' => 'Like supprimé',
+                'likes' => count($comment->getLikes())
+            ], 200);
+        }
+
+        $comment->addLike($user);
+        $manager->flush();
+
+        return $this->json([
+            'message' => 'ça marche bien',
+            'likes' => count($comment->getLikes())
+        ], 200);
     }
 }

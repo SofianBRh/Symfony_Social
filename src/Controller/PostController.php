@@ -56,4 +56,5 @@ class PostController extends AbstractController
 
         return new Response('Saved new product with id '.$product->getId());
     }
+    
 }
