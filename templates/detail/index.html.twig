@@ -30,7 +30,7 @@
       
       <p class="mb-1">{{ comment.content|raw }}</p>
       <small>le {{ comment.createdAt|date("d/m/Y") }} par {{ comment.user.username }}</small>
-      <a class="js-like" href="{{ path('app_comment_like', {'id' : comment.id}) }}" data-like="{{ index }}">{{ app.user in comment.likes ? 'Like' : 'Unlike'}}</a>
+      <a class="js-like" href="{{ path('app_comment_like', {'id' : comment.id}) }}" data-like="{{ index }}">{{ app.user in comment.likes ? 'Like' : 'Like'}}</a>
       <span class="js-likes" data-like="{{ index }}">{{ comment.likes|length }}</span>
     </li>
   {% else %}
