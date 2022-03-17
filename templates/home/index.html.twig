@@ -30,7 +30,9 @@
 
   {% for post in posts %}
     {% include 'partials/_post.html.twig' %}
-    
+    <a href="{{ path('connect_github_start') }}">
+    Login with Github
+</a>
   {% endfor %}
 {% endblock %}
       
