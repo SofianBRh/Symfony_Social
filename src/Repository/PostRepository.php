@@ -45,6 +45,28 @@ class PostRepository extends ServiceEntityRepository
         }
     }
 
+    /*
+        public function clore(Post $id, ManagerRegistry $doctrine)
+        {
+            $entityManager = $doctrine->getManager();
+            $entityManager->
+            $status = $post->getStatus->find($id);
+            if (!$status) {
+                throw $this->createNotFoundException(
+                    'No product found for id '. $id
+                );
+            }
+
+
+            $status->setName('new status');
+            $post->flush();
+
+            return $this->redirectToRoute('app_admin_post_index', [
+                'id' => $status->getId(),
+            ]);
+        }
+
+    } */
     // /**
     //  * @return Post[] Returns an array of Post objects
     //  */

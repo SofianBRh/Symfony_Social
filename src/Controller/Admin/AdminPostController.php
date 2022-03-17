@@ -5,10 +5,11 @@ namespace App\Controller\Admin;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/posts')]
 class AdminPostController extends AbstractController
@@ -73,4 +74,19 @@ class AdminPostController extends AbstractController
 
         return $this->redirectToRoute('app_admin_post_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/clore/{id}', name: 'app_admin_post_clore', methods: ['GET'])]
+    public function clore(Request $request, Post $post, PostRepository $post_repo, ManagerRegistry $doctrine, $id): Response
+    {
+            //je recupere mon post via l id
+            $post = $post_repo->find($id);
+            $post->setStatus('closed');
+            //  j'envoie a ma bdd
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($post);
+            $entityManager->flush();
+
+    
+        return $this->redirectToRoute('app_admin_post_index', [], Response::HTTP_SEE_OTHER);
+    }
+    
 }
