@@ -10,3 +10,19 @@ import './styles/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
+
+const axios = require('axios').default;
+
+function onClickBtnLike(event){
+  event.preventDefault();
+
+  const url = this.href;
+
+  const spanCount=document.querySelector('.js-likes[data-like="'+ this.dataset.like +'"]')
+  axios.get(url).then(function(response){
+    spanCount.textContent = response.data.likes
+  })
+}
+document.querySelectorAll('a.js-like').forEach(function(link){
+  link.addEventListener('click',onClickBtnLike);
+})
