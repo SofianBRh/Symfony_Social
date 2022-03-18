@@ -15,7 +15,32 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class PostRepository extends ServiceEntityRepository
+
+
 {
+
+
+    public function findArticlesByName(string $query)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->where(
+                $qb->expr()->andX(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('p.title', ':query'),
+                        $qb->expr()->like('p.content', ':query'),
+                    ),
+                    $qb->expr()->isNotNull('p.created_at')
+                )
+            )
+            ->setParameter('query', '%' . $query . '%')
+        ;
+        return $qb
+            ->getQuery()
+            ->getResult();
+    }
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Post::class);
@@ -45,28 +70,7 @@ class PostRepository extends ServiceEntityRepository
         }
     }
 
-    /*
-        public function clore(Post $id, ManagerRegistry $doctrine)
-        {
-            $entityManager = $doctrine->getManager();
-            $entityManager->
-            $status = $post->getStatus->find($id);
-            if (!$status) {
-                throw $this->createNotFoundException(
-                    'No product found for id '. $id
-                );
-            }
 
-
-            $status->setName('new status');
-            $post->flush();
-
-            return $this->redirectToRoute('app_admin_post_index', [
-                'id' => $status->getId(),
-            ]);
-        }
-
-    } */
     // /**
     //  * @return Post[] Returns an array of Post objects
     //  */
@@ -95,4 +99,22 @@ class PostRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }
+
+   
+
+    public function search($value)
+    {   //SELECT * FROM livre as l WHERE l.titre LIKE "%xxx%" ORDER BY l.titre, l.auteur
+        return $this->createQueryBuilder('p')//le paramètre l représente la table livre (comme un alias dans une requête SQL)
+            ->where('p.title LIKE :val')
+            ->setParameter('val', "%$value%")
+            ->orderBy('p.title', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    
+}
+
