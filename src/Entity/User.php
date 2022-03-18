@@ -264,6 +264,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    
+    public function __toString(): string
+    {
+        return $this->username;
+
+
     public function getGithubId(): ?string
     {
         return $this->githubId;
@@ -274,5 +280,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->githubId = $githubId;
 
         return $this;
+
     }
 }

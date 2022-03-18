@@ -100,9 +100,9 @@ class PostRepository extends ServiceEntityRepository
     }
     */
 
-/*
-     * @return Livre[] Returns an array of Livre objects
-     */
+}
+
+   
 
     public function search($value)
     {   //SELECT * FROM livre as l WHERE l.titre LIKE "%xxx%" ORDER BY l.titre, l.auteur
@@ -117,3 +117,4 @@ class PostRepository extends ServiceEntityRepository
 
     
 }
+
